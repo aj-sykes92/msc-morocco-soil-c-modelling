@@ -37,3 +37,10 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# knitted .Rmd files
+*.html
+
+# model and helper data folders (big)
+helper-data/
+model-data/
