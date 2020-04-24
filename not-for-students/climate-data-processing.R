@@ -136,11 +136,19 @@ Dat_clim <- Dat_clim %>%
       mutate(precip_mm = ifelse(precip_mm < 0, 0, precip_mm)) # # another quick and dirty fix for potential errors - occasional negative precipitation values
   }))
 
-# write out full climate data
+# number cells (x-y pairs) to allow raster-based extraction of data
+Dat_clim <- Dat_clim %>%
+  mutate(cell_no = 1:nrow(Dat_clim)) %>%
+  select(x, y, cell_no, clim_data = data_reg)
+
+  # write out full climate data
 write_rds(Dat_clim, "helper-data/morocco-full-climate-data-1902-2097.rds")
 
 # how about a helper raster to allow spatial point querying of data?
 # number lat/lon values and transform to raster, keep numbers in climate df
+Ras_help <- Dat_clim %>%
+  select(x, y, z = cell_no) %>%
+  rasterFromXYZ()
 
-
-
+# write out
+write_rds(Ras_help, "helper-data/morocco-climate-data-helper-raster.rds")
