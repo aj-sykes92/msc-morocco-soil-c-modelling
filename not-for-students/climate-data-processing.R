@@ -139,9 +139,17 @@ Dat_clim <- Dat_clim %>%
 # number cells (x-y pairs) to allow raster-based extraction of data
 Dat_clim <- Dat_clim %>%
   mutate(cell_no = 1:nrow(Dat_clim)) %>%
-  select(x, y, cell_no, clim_data = data_reg)
+  select(x, y, cell_no, data_full = data_reg)
 
-  # write out full climate data
+# filter data to > 1961 (no data for crops from before this)
+Dat_clim <- Dat_clim %>%
+  mutate(data_full = data_full %>%
+           map(function(df){
+             df %>%
+               filter(year >= 1961)
+           }))
+
+# write out full climate data
 write_rds(Dat_clim, "helper-data/morocco-full-climate-data-1902-2097.rds")
 
 # how about a helper raster to allow spatial point querying of data?
