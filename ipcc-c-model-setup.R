@@ -10,16 +10,13 @@ source("ipcc-c-model-functions.R")
 
 # read in main climate data
 # we'll use this as the basis for the model simulation
-Dat_nest <- read_rds("model-data/bush-estate-1980-2070-climvars-100-samples.rds")
+Dat_nest <- read_rds("model-data/morocco-example-climate-data.rds")
 
-# yield data for bush estate's barley
-Dat_crop <- read_csv("model-data/bush-estate-barley-crop-data-1980-2070.csv")
+# yield data for default morocco crop data
+Dat_crop <- read_csv("model-data/morocco-example-crop-data.csv")
 
-# manure application for bush estate's barley
-Dat_manure <- read_csv("model-data/bush-estate-manure-application-1980-2070.csv")
-
-# sand percentage for soil at bush estate
-sand_frac <- 0.47006 # sampled from sand % raster — no point reading in every time
+# manure application for default morocco crop data
+Dat_manure <- read_csv("model-data/morocco-example-manure-data.csv")
 
 #####################################################
 # starting with monthly climate variables, condensing to annual modification factors (tfac and wfac)
@@ -60,9 +57,9 @@ Dat_nest <- Dat_nest %>%
   mutate(data_full = data_full %>%
            map(function(df){
              df %>%
-               mutate(sand_frac = sand_frac) %>%
+               #mutate(sand_frac = sand_frac) %>%
                left_join(Dat_crop %>%
-                           select(year, N_frac, lignin_frac, C_tot), by = "year")
+                           select(year, N_frac, lignin_frac, C_tot, sand_frac), by = "year")
            }))
 
 #####################################################

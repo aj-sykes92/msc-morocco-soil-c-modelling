@@ -285,7 +285,7 @@ build_model <- function(clim_data, crop_data, manure_data){
   Dat_manure <- read_csv(manure_data)
   
   # sand percentage for soil at bush estate
-  sand_frac <- 0.47006 # sampled from sand % raster — no point reading in every time
+  #sand_frac <- 0.47006 # sampled from sand % raster — no point reading in every time
   
   #####################################################
   # starting with monthly climate variables, condensing to annual modification factors (tfac and wfac)
@@ -326,9 +326,8 @@ build_model <- function(clim_data, crop_data, manure_data){
     mutate(data_full = data_full %>%
              map(function(df){
                df %>%
-                 mutate(sand_frac = sand_frac) %>%
                  left_join(Dat_crop %>%
-                             select(year, N_frac, lignin_frac, C_tot), by = "year")
+                             select(year, N_frac, lignin_frac, C_tot, sand_frac), by = "year")
              }))
   
   #####################################################
@@ -358,7 +357,7 @@ build_model <- function(clim_data, crop_data, manure_data){
 ###################
 # timeseries plot function
 ts_plot <- function(df_bl, df_mod){
-  baseline <- select(df_bl, "scenario_baseline")[[1, 2]] %>% filter(year == 2018) %>% pull(total_y)
+  baseline <- df_bl$scenario_baseline[[1]] %>% filter(year == 2018) %>% pull(total_y)
   #ylims <- df %>%
   #  ungroup() %>%
   #  unnest(cols = c(col)) %>%
