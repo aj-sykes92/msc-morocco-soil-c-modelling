@@ -110,10 +110,10 @@ server <- function(input, output) {
     manure_input <- input$manure_data_bl$datapath
     
     if(!is.null(crop_input) | !is.null(manure_input)){
-      crop_data <- ifelse(!is.null(crop_input), crop_input, "model-data/bush-estate-barley-crop-data-1980-2070.csv")
-      manure_data <- ifelse(!is.null(manure_input), manure_input, "model-data/bush-estate-manure-application-1980-2070.csv")
+      crop_data <- ifelse(!is.null(crop_input), crop_input, "model-data/morocco-example-crop-data.csv")
+      manure_data <- ifelse(!is.null(manure_input), manure_input, "model-data/morocco-example-manure-data.csv")
       
-      model$baseline_data <- build_model(clim_data = "model-data/bush-estate-1980-2070-climvars-100-samples.rds",
+      model$baseline_data <- build_model(clim_data = "model-data/morocco-example-climate-data.rds",
                                          crop_data = crop_data,
                                          manure_data = manure_data)
     }
@@ -129,7 +129,7 @@ server <- function(input, output) {
       crop_data <- crop_input
       manure_data <- manure_input
       
-      model$modified_data <- build_model(clim_data = "model-data/bush-estate-1980-2070-climvars-100-samples.rds",
+      model$modified_data <- build_model(clim_data = "model-data/morocco-example-climate-data.rds",
                                          crop_data = crop_data,
                                          manure_data = manure_data)
     }
