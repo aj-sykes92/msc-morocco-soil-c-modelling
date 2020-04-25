@@ -8,9 +8,9 @@ source("ipcc-c-model-functions.R")
 ui <- fluidPage(
   
   # app title ----
-  titlePanel("IPCC (2019) steady state soil C model for Bush Estate Farm"),
+  titlePanel("IPCC (2019) three-pool steady state soil C model"),
   # app subtitle
-  h4(HTML("Prepared for MSc Soils and Sustainability Environmental Modelling Practical<br/> ")),
+  h4(HTML("Prepared for MSc EPM & SS Morocco field trip modelling<br/> ")),
   
   
   # sidebar layout
@@ -20,25 +20,25 @@ ui <- fluidPage(
     sidebarPanel(
       
       titlePanel(title = "Data input"),
-      h4(HTML("Baseline scenario (modification optional; defaults to base data)<br/> ")),
+      h4(HTML("Baseline scenario (defaults to example scenario)<br/> ")),
       
-      # Input: Select a file ----
+      # select crop data file for baseline scenario
       fileInput(inputId = "crop_data_bl",
                 label = "Crop input data file",
                 multiple = FALSE,
                 accept = c("text/csv",
                            "text/comma-separated-values,text/plain",
                            ".csv"),
-                placeholder = "bush-estate-barley-crop-data-1980-2070.csv"),
+                placeholder = "morocco-example-crop-data.csv"),
       
-      # Input: Select a file ----
+      # select manure data file for baseline scenario
       fileInput(inputId = "manure_data_bl",
                 label = "Manure input data file",
                 multiple = FALSE,
                 accept = c("text/csv",
                            "text/comma-separated-values,text/plain",
                            ".csv"),
-                placeholder = "bush-estate-manure-application-1980-2070.csv"),
+                placeholder = "morocco-example-manure-data.csv"),
       
       h4(HTML("Modified scenario (defaults to no scenario)<br/> ")),
       
@@ -80,15 +80,15 @@ ui <- fluidPage(
     # Main panel for displaying outputs ----
     mainPanel(
       
-      h4(HTML("Annual C stock time series for Bush Estate farm")),
+      h4(HTML("Annual soil carbon stock time series")),
       plotOutput(outputId = "main_plot"),
       
       h4(HTML(" ")),
-      h4(HTML("C stock changes for Bush Estate farm (all values in tonnes / ha)")),
+      h4(HTML("Soil carbon stock change (all values in tonnes / ha)")),
       tableOutput(outputId = "main_table"),
       
       h4(HTML(" ")),
-      h4(HTML("Summarised C stock change per decade for Bush Estate farm")),
+      h4(HTML("Summarised soil carbon stock change per decade")),
       plotOutput(outputId = "second_plot")
 
     )
