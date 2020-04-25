@@ -19,6 +19,15 @@ ui <- fluidPage(
     # sidebar panel
     sidebarPanel(
       
+      h4(HTML("Climate data file (defaults to example scenario)<br/> ")),
+      
+      # select climate data input file
+      fileInput(inputId = "clim_data",
+                label = "Crop input data file",
+                multiple = FALSE,
+                accept = c(".rds"),
+                placeholder = "morocco-example-climate-data.rds"),
+      
       titlePanel(title = "Data input"),
       h4(HTML("Baseline scenario (defaults to example scenario)<br/> ")),
       
@@ -99,6 +108,8 @@ ui <- fluidPage(
 # Define server logic to read selected file ----
 server <- function(input, output) {
   
+  options(shiny.maxRequestSize=10*1024^2)
+  
   model <- reactiveValues(baseline_data = read_rds("model-scenarios/scenario-baseline.rds"),
                           modified_data = NULL,
                           output_csv = NULL)
@@ -106,14 +117,16 @@ server <- function(input, output) {
   # only run baseline model if there's been a change to inputs
   # and assume default inputs if any are undefined
   observeEvent(input$run_model, {
+    clim_input <- input$clim_data$datapath
     crop_input <- input$crop_data_bl$datapath
     manure_input <- input$manure_data_bl$datapath
     
-    if(!is.null(crop_input) | !is.null(manure_input)){
+    if(!is.null(clim_input) | !is.null(crop_input) | !is.null(manure_input)){
+      clim_data <- ifelse(!is.null(clim_input), clim_input, "model-data/morocco-example-climate-data.rds")
       crop_data <- ifelse(!is.null(crop_input), crop_input, "model-data/morocco-example-crop-data.csv")
       manure_data <- ifelse(!is.null(manure_input), manure_input, "model-data/morocco-example-manure-data.csv")
       
-      model$baseline_data <- build_model(clim_data = "model-data/morocco-example-climate-data.rds",
+      model$baseline_data <- build_model(clim_data = clim_data,
                                          crop_data = crop_data,
                                          manure_data = manure_data)
     }
@@ -122,14 +135,18 @@ server <- function(input, output) {
   
   # only run this one if there's been a change to both outputs, otherwise leave NULL or in previous version
   observeEvent(input$run_model, {
+    clim_input <- ifelse(!is.null(input$clim_data$datapath),
+                         input$clim_data$datapath,
+                         "model-data/morocco-example-climate-data.rds")
     crop_input <- input$crop_data_mod$datapath
     manure_input <- input$manure_data_mod$datapath
     
     if(!is.null(crop_input) & !is.null(manure_input)){
+      clim_data <- clim_input
       crop_data <- crop_input
       manure_data <- manure_input
       
-      model$modified_data <- build_model(clim_data = "model-data/morocco-example-climate-data.rds",
+      model$modified_data <- build_model(clim_data = clim_input,
                                          crop_data = crop_data,
                                          manure_data = manure_data)
     }
