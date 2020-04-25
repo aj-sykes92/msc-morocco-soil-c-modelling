@@ -1,16 +1,21 @@
 ---
-title: "Project Introduction: Soil C Modelling in Morrocan agriculture"
+title: "Project introduction: Soil carbon modelling in Morrocan agriculture"
 author: "Dr Alasdair Sykes"
-date: "23/04/2020"
+date: "25-04-2020"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-```{r main_plot, echo=F, fig.align='center', fig.height=4, fig.width=, message=FALSE}
-
+<br>
+<br>
+<br>
+```{r, out.width = "60%", fig.align = "center", echo = F}
+knitr::include_graphics("not-for-students/hatim-belyamani-1GZWbLJWfRo-unsplash.jpg")
+```
+<br>
+```{r main_plot, echo = F, message = F, fig.align = 'center', fig.height = 3, fig.width = 7}
 source("ipcc-c-model-functions.R")
 Dat_bl <- read_rds("model-scenarios/scenario-baseline.rds")
 
@@ -20,14 +25,12 @@ Dat_mod <- Dat_bl %>%
              df %>% mutate(till_type = c(rep("full", 58), rep("zero", 79)))
            }) %>%
            map(run_model))
-
-ts_plot(Dat_bl, Dat_mod)
+ts_plot(Dat_bl, Dat_mod) +
+  theme(legend.position = "none")
 
 ```
-
-```{r, out.width = "30%", fig.align = "center"}
-knitr::include_graphics("not-for-students-hatim-belyamani-1GZWbLJWfRo-unsplash.jpg")
-```
+<br>
+<br>
 
 ## 1. Introduction
 
@@ -45,9 +48,9 @@ This project will combine spatial data, agricultural statistics and climate mode
 * Big data handling and analysis in the R environment
 
 #### 1.3. Overview of project
-You have been provided with an implementation of the IPCC (2019) steady-state soil C stock model for global croplands. This model is capable of estimating C stocks---and stock change over time---in soils under croplands. It has been parameterised such that it is possible to utilise this model anywhere in the world under crop production.
+You have been provided with an implementation of the IPCC (2019) steady-state soil C stock model for global croplands. This model is capable of estimating C stocks---and stock change over time---in soils under croplands. It has been parameterised such that it is possible to utilise this model to simulate---in theory---any cropland soil, anywhere in the world.
 
-Your task will be to define and execute a series of cases studies using this model (in the order of 3--5, though the exact number is up to you) which examine the potential for C sequestration under Moroccan agricultural systems, and are as representative of Moroccan agriculture as a whole as possible.
+Your task will be to define and execute a series of cases studies using this model (in the order of 4--8, though the exact number is up to you) which examine the potential for C sequestration under Moroccan agricultural systems, and are as representative of Moroccan agriculture as a whole as possible.
 
 To do this, you will need to:
 
@@ -59,7 +62,7 @@ To do this, you will need to:
 
 More detail on each of these separte elements is provided below in section 4.
 
-> Note: You should treat everything provided in this project repository as a giant digital toolbox. By this I mean that the model app, all of the base data, and all of the helper functions provided are designed to equip you with a powerful jumping-off point from which to conduct your own analysis. It is up to you to decide how to use these materials and which questions you wish to answer. I will be on hand to help you make these decisions, but it is up to you to take the initiative and direct your own study.
+**Note: You should treat everything provided in this project repository as a giant digital toolbox. By this I mean that the model app, all of the base data, and all of the helper functions provided are designed to equip you with a powerful jumping-off point from which to conduct your own analysis. It is up to you to decide how to use these materials and which questions you wish to answer. I will be on hand to help you make these decisions, but it is up to you to take the initiative and direct your own project.**
 
 ## 2. How does the model work?
 The model is a simplified, steady-state, three-pool soil carbon model. By steady-state, it is meant that the model tries to deternine a soil C equilibrium, assuming consistency of year-on-year inputs. These three pools are differentiated primarily by different decay rates (i.e. rates at which soil carbon is lost, via microbial mineralisation, to the atmosphere as CO~2~). These pools are:
@@ -75,7 +78,7 @@ The model simulates the flow of organic carbon into, out of and between these po
 The version of the model has been implemented using R, and is provided to you alongside an RShiny app which will allow you to use this model via a simple user interface.
 
 ## 3. Getting started
-This project will involve using R and RStudio. For those of you who are less than confident in this environment, fear not---while you are not going to get away without at least looking at and modifying some code, it is entirely possible to complete the project *to a high standard with minimal or no writing of novel R code*. For those R enthusiasts amongst you, you will have complete and unrestricted access to all of the code with which this model is built and executed. If you ever wanted to get in amongst the workings of some relatively advanced R programming (like Shiny apps, functional programming, steady-state modelling and Monte Carlo simulation), this is your chance.
+This project will involve using R and RStudio. For those of you who are less than confident in this environment, fear not---while you are not going to get away without at least looking at and modifying some code, **it is entirely possible to complete the project to a high standard with minimal or no writing of novel R code**. For those R enthusiasts amongst you, you will have complete and unrestricted access to all of the code with which this model is built and executed. If you ever wanted to get in amongst the workings of some relatively advanced R programming (like Shiny apps, functional programming, steady-state modelling and Monte Carlo simulation), this is your chance.
 
 Regardless of where you are on the R enthusiasm scale, you need to make sure of the following before you start:
 
@@ -85,7 +88,7 @@ Regardless of where you are on the R enthusiasm scale, you need to make sure of 
 
 3. You have the `tidyverse` and `shiny` packages installed and up to date. This is crucial---the model won't run without this step! This simplest way to check this is to type `install.packages(c("tidyverse", "shiny"))` into the console and hit return. If you don't have them installed, this will install them; if you do, it'll update them as necessary.
 
-> Note: I realise it's annoying to go through these steps before starting. It's good practice to update your R/RStudio versions regularly---it saves annoying errors and time wasted trying to figure out why. If you really want to skip the first two steps, you can, but if anything goes wrong when running the model, please come back to this stage and update everything as a first port of call. The last step (installing your packages) is not optional, and all you will get is pain and error messages if you skip this one!
+**Note: I realise it's annoying to go through these steps before starting. It's good practice to update your R/RStudio versions regularly---it saves annoying errors and time wasted trying to figure out why. If you really want to skip the first two steps, you can, but if anything goes wrong when running the model, please come back to this stage and update everything as a first port of call. The last step (installing your packages) is not optional, and all you will get is pain and error messages if you skip this one!**
 
 ## 4. Launching and using the model UI
 I will give everyone interested in this project a full walkthrough of how to use the model in the live introduction to this project. I will also make sure there is a video tutorial available in the Learn folder. As a quick reminder, here are the steps you need to go through to run the Shiny app version of the model:
@@ -120,10 +123,10 @@ Think about:
 
 3. What hypothetical scenarios do you want to think about? You are not constrained to modelling things which are strictly representative of current practice; the model simulation extends far into the future for this reason. How might you improve soil management in your chosen scenarios to maximise sequestration? How will you ensure this is realistic?
 
-### 3.2. Set up and run model
+### 5.2. Set up and run model
 Refer to Section 4 and the video materials to set up and execute your model runs. Note that you are not confined to the model UI---it's there to provide a comfortable environment in which to run the model, but this comes at the expense of efficiency and true control. If you're not afraid of a bit of coding, check out the R script **ipcc-model-setup.R** in the base directory. This script is used to create default scenario in the model UI, but you can modify it as you see fit if you want to run the model from the RStudio console.
 
-### 3.3. Results analysis
+### 5.3. Results analysis
 The model UI gives you some visual and numeric outputs right away, and you should feel free to use these as much as you like. It also gives you the option to export your data to a .csv file, which you can use however you see fit to conduct your analysis. If you want true control over the this part of the project, you can do as suggested in 3.2 and run the model in the RStudio console using modifications of the R script **ipcc-model-setup.R**. This will give you the complete and unabridged model output to analyse as you see fit.
 
 I expect you to define your own research questions, but if you need inspiration, you can think about answering questions like the following:
@@ -147,5 +150,5 @@ Below are some more ideas for additional areas you might like to look into as pa
 
 3. The model doesn't include any data on costs. This is by design (it's a pure soil systems model, not an economic model), but the first question on the lips of any policymaker is often to do with cost. Can you source cost/benefit data to add to your scenarios and turn them into a fuller set of environmental management recommendations?
 
-##. 7 That's all folks
+## 7. That's all folks
 I hope this makes for an interesting project. Feel free to play with the model (and accompanying code) as much as you like, and experiment with its capabilities. My hope is that the materials provided here will provide you with a comprehensive support base for your project, and allow you to focus on the more compelling, dynamic elements of modelling. I will be on hand throughout the entire project to advise, problem-solve, help with coding and generally support you in your project development. Enjoy!
