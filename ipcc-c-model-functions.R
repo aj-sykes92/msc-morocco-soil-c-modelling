@@ -66,9 +66,15 @@ wfac <- function(precip, PET){
 
 ##################
 # temperature factor
+
+# prelim function, required to combat annoying R 'feature' (returns NaN for negative numbers raised to non-integer powers...)
+rtp <- function(x, power){
+  sign(x) * abs(x) ^ (power)
+}
+
 tfac <- function(temp){
   prelim <- (pm$tmax - temp) / (pm$tmax - pm$topt)
-  T_i <- prelim^pm$ta * exp(0.076 * (1 - prelim^pm$tb))
+  T_i <- rtp(prelim, pm$ta) * exp(0.076 * (1 - rtp(prelim, pm$tb)))
   tfac <- 1 / 12 * sum(T_i)
   return(tfac)
 }
