@@ -333,7 +333,7 @@ build_model <- function(clim_data, crop_data, manure_data){
              map(function(df){
                df %>%
                  left_join(Dat_crop %>%
-                             select(year, N_frac, lignin_frac, C_tot, sand_frac), by = "year")
+                             dplyr::select(year, N_frac, lignin_frac, C_tot, sand_frac), by = "year")
              }))
   
   #####################################################
@@ -347,7 +347,7 @@ build_model <- function(clim_data, crop_data, manure_data){
              map2(runin_years, run_in) %>%
              map(function(df){
                df %>%
-                 left_join(Dat_crop %>% select(year, till_type), by = "year") %>%
+                 left_join(Dat_crop %>% dplyr::select(year, till_type), by = "year") %>%
                  mutate(till_type = ifelse(is.na(till_type), "full", till_type))
              }))
   
