@@ -262,7 +262,7 @@ run_model <- function(df){
            
            # passive pool
            k_p = k_p(tfac = tfac,
-                     wfac = tfac),
+                     wfac = wfac),
            passive_y_ss = passive_y_ss(active_y_ss = active_y_ss,
                                        slow_y_ss = slow_y_ss,
                                        k_a = k_a,
