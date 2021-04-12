@@ -2,7 +2,7 @@
 title: "Project introduction: Soil carbon modelling in Morrocan agriculture"
 author: "Dr Alasdair Sykes"
 date: "25-04-2020"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include = FALSE}
@@ -47,6 +47,8 @@ This project will combine spatial data, agricultural statistics and climate mode
 * Manipulation and harmonisation of spatial data
 * Big data handling and analysis in the R environment
 
+**A plea (and a pitch) from Alasdair**. *Teaching technical, code-heady classes of this type, I tend to find that this point (i.e. where I've just mentioned one or more of "R", "code", "big data" and "modelling") is usually the point where a significant portion of the class checks out. Typical reasons are "I'm not good at coding", "Numbers aren't my thing", or that old favourite "My computer hates me". If you just had this mental reaction, I totally get it. No-one is born good at this stuff, and no-one just wakes up one day being good at it either. But science is increasingly computationally-focused, and it is a really, really important skill to nurture. As a data scientist, I'm biased, but the reason I learned this stuff is that it gives me an unparalleled medium for sharing my knowledge and the results of my work. I've designed this project to give you an insight into where modelling and data science can take you in this field --- all the models and data in this repository are 'real' --- and so, if you're tired of feeling dread whenever you walk into a code-based class, or you want to get these skills on your CV, consider giving this project a shot.* `r emo::ji("victory")`
+
 #### 1.3. Overview of project
 You have been provided with an implementation of the IPCC (2019) steady-state soil C stock model for global croplands. This model is capable of estimating C stocks---and stock change over time---in soils under croplands. It has been parameterised such that it is possible to utilise this model to simulate---in theory---any cropland soil, anywhere in the world.
 
@@ -62,7 +64,9 @@ To do this, you will need to:
 
 More detail on each of these separte elements is provided below in section 4.
 
-**Note: You should treat everything provided in this project repository as a giant digital toolbox. By this I mean that the model app, all of the base data, and all of the helper functions provided are designed to equip you with a powerful jumping-off point from which to conduct your own analysis. It is up to you to decide how to use these materials and which questions you wish to answer. I will be on hand to help you make these decisions, but it is up to you to take the initiative and direct your own project.**
+**Note:** *You should treat everything provided in this project repository as a giant digital toolbox. By this I mean that the model app, all of the base data, and all of the helper functions provided are designed to equip you with a powerful jumping-off point from which to conduct your own analysis. It is up to you to decide how to use these materials and which questions you wish to answer. I will be on hand to help you make these decisions, but it is up to you to take the initiative and direct your own project.*
+
+**Also note:** *You have no doubt downloaded this file as part of the .zip folder from Learn. This is totally fine and you can skip to the next section here if you want --- but for those who want to see the 'real deal' of how this came together, the live version of this project, with nothing stripped out or simplified, is hosted [here](https://github.com/aj-sykes92/msc-morocco-soil-c-modelling). You can view it, clone it, and even use it as the start of your own project if you wish --- this, in a nutshell, is the real value of open-source coding.*
 
 ## 2. How does the model work?
 The model is a simplified, steady-state, three-pool soil carbon model. By steady-state, it is meant that the model tries to deternine a soil C equilibrium, assuming consistency of year-on-year inputs. These three pools are differentiated primarily by different decay rates (i.e. rates at which soil carbon is lost, via microbial mineralisation, to the atmosphere as CO~2~). These pools are:
@@ -169,91 +173,74 @@ Below are some more ideas for additional areas you might like to look into as pa
 I hope this makes for an interesting project. Feel free to play with the model (and accompanying code) as much as you like, and experiment with its capabilities. My hope is that the materials provided here will provide you with a comprehensive support base for your project, and allow you to focus on the more compelling, dynamic elements of modelling. I will be on hand throughout the entire project to advise, problem-solve, help with coding and generally support you in your project development. Enjoy!
 
 ## Appendix --- folder schema
-This appendix provides a descript of all the files and sub-directories provided to you in the download folder **msc-morocco-soil-c-modelling.zip**. You don't have to memorise it in order to use the model effectively(!), but it is here for you to refer to should you have questions about any aspects of the way the model is constructed.
+This appendix provides a description of all the files and sub-directories provided to you in the download folder **msc-morocco-soil-c-modelling.zip**. You don't have to memorise it in order to use the model effectively(!), but it is here for you to refer to should you have questions about any aspects of the way the model is constructed.
 
 
 ### ~/helper-data
 This folder contains all of the data files which have been constructed to give you a basis from which to build model scenarios. The script **helper-scripts/model-data-creator.R** draws exclusively on these files and translates them into model inputs. All the files it contains are saved in .rds format for consistency.
 
-#### ~/helper-data/morocco-climate-data-helper-raster.rds
-A simple raster file which is used in conjunction with the more complex multi-level data file **morocco-full-climate-data-1902-2097.rds** to allow spatial points-based selection from this file.
+**~/helper-data/morocco-climate-data-helper-raster.rds**. A simple raster file which is used in conjunction with the more complex multi-level data file **morocco-full-climate-data-1902-2097.rds** to allow spatial points-based selection from this file.
 
-#### ~/helper-data/morocco-crop-area-ha-2010.rds
-A raster brick which gives spatially explict estimates of Moroccan crop area for the year 2010. Derived from MapSPAM data which can be found [here](https://www.mapspam.info).
+**~/helper-data/morocco-crop-area-ha-2010.rds**. A raster brick which gives spatially explict estimates of Moroccan crop area for the year 2010. Derived from MapSPAM data which can be found [here](https://www.mapspam.info).
 
-#### ~/helper-data/morocco-crop-yield-tonnes-per-ha-2010.rds
-A raster brick which gives spatially explict estimates of Moroccan crop yield for the year 2010. Derived from MapSPAM data which can be found [here](https://www.mapspam.info).
+**~/helper-data/morocco-crop-yield-tonnes-per-ha-2010.rds**. A raster brick which gives spatially explict estimates of Moroccan crop yield for the year 2010. Derived from MapSPAM data which can be found [here](https://www.mapspam.info).
 
-#### ~/helper-data/morocco-crop-yields-faostat-1961-2018.rds
-A non-spatially explicit dataframe-based time-series of crop yields and areas in Morocco. Derived from [FAOstat](http://www.fao.org/faostat/en/). Useful to see which crops the model may simulate.
+**~/helper-data/morocco-crop-yields-faostat-1961-2018.rds**. A non-spatially explicit dataframe-based time-series of crop yields and areas in Morocco. Derived from [FAOstat](http://www.fao.org/faostat/en/). Useful to see which crops the model may simulate.
 
-#### ~/helper-data/morocco-full-climate-data-1902-2097.rds
-A multi-level dataframe containing spatially specific timeseries estimates of Moroccan climate (both historical series and climate predictions). It is based on data from the [UKCP](https://www.metoffice.gov.uk/research/approach/collaboration/ukcp/download-data).
+**~/helper-data/morocco-full-climate-data-1902-2097.rds**. A multi-level dataframe containing spatially specific timeseries estimates of Moroccan climate (both historical series and climate predictions). It is based on data from the [UKCP](https://www.metoffice.gov.uk/research/approach/collaboration/ukcp/download-data).
 
-#### ~/helper-data/morocco-shapefile.rds
-A shapefile outlining Morocco. The model doesn't use this directly, but it was used in the creation of all the spatial datasets, and remains useful for map-type visualisations.
+**~/helper-data/morocco-shapefile.rds**. A shapefile outlining Morocco. The model doesn't use this directly, but it was used in the creation of all the spatial datasets, and remains useful for map-type visualisations.
 
-#### ~/helper-data/morocco-soil-sand-percentage.rds
-A raster file with estimates of soil sand % across Morocco. Originally derived from the [SoilGrids](https://soilgrids.org/#!/?layer=ORCDRC_M_sl2_250m&vector=1) data repository.
+**~/helper-data/morocco-soil-sand-percentage.rds**. A raster file with estimates of soil sand % across Morocco. Originally derived from the [SoilGrids](https://soilgrids.org/#!/?layer=ORCDRC_M_sl2_250m&vector=1) data repository.
 
 
-### ~/helper-scripts
+#### ~/helper-scripts
 A folder containing just one R script, the role of which is to translate data in the **helper-data** folder into usable model inputs. You can also use this folder to save files which you write yourself for the same purpose.
 
-#### ~/helper-scripts/model-data-creator.R
-An R script which draws exclusively on the **helper-data** files and translates them into model inputs. You can (and should) modify this file to create new model inputs. The script has been commented extensively to point you to elements which you might want to modify.
+**~/helper-scripts/model-data-creator.R**. An R script which draws exclusively on the **helper-data** files and translates them into model inputs. You can (and should) modify this file to create new model inputs. The script has been commented extensively to point you to elements which you might want to modify.
 
 
-### ~/model-data
+#### ~/model-data
 A folder containing files which the model may utilise as inputs. These files can be loaded into the model using the user interface in **app.R**.
 
-#### ~/model-data/morocco-example-crop-data.csv
-An example of a crop management data file which can be used in the model. Also taken by the model as implemented in **app.R** as its default scenario.
+**~/model-data/morocco-example-crop-data.csv**. An example of a crop management data file which can be used in the model. Also taken by the model as implemented in **app.R** as its default scenario.
 
-#### ~/model-data/morocco-example-manure-data.csv
-An example of a manure management data file which can be used in the model. Also taken by the model as implemented in **app.R** as its default scenario.
+**~/model-data/morocco-example-manure-data.csv**. An example of a manure management data file which can be used in the model. Also taken by the model as implemented in **app.R** as its default scenario.
 
-#### ~/model-data/morocco-example-climate-data.rds
-An example of a climate data file which can be used in the model. Also taken by the model as implemented in **app.R** as its default scenario.
+**~/model-data/morocco-example-climate-data.rds**. An example of a climate data file which can be used in the model. Also taken by the model as implemented in **app.R** as its default scenario.
 
 
-### ~/model-scenarios
+#### ~/model-scenarios
 A folder containing complete runs of the model. As supplied, this folder contains just one file (the model default scenario), but may be used to store more that you create.
 
-####' ~/model-scenarios/scenario-baseline.rds
-An example run of the model which is used as the default baseline by **app.R**.
+**~/model-scenarios/scenario-baseline.rds**. An example run of the model which is used as the default baseline by **app.R**.
 
 
-### ~/parameter-data
+#### ~/parameter-data
 A folder containing files from which the model draws its default parameters. You don't need to modify any of these files unless you wish to examine the effect of changed parameters on the way the model functions (for example, as part of a sensitivity analysis).
 
-#### ~/parameter-data/above-ground-residue-coefficients.csv
-A file containing parameters relating to above-ground crop residue composition for different crops.
+**~/parameter-data/above-ground-residue-coefficients.csv**. A file containing parameters relating to above-ground crop residue composition for different crops.
 
-#### ~/parameter-data/below-ground-residue-coefficients.csv
-A file containing parameters relating to below-ground crop residue composition for different crops.
+**~/parameter-data/below-ground-residue-coefficients.csv**. A file containing parameters relating to below-ground crop residue composition for different crops.
 
-#### ~/parameter-data/crop-n-and-lignin-fractions.csv
-A file containing parameters relating to the nitrogen and lignin content of different crop residue types.
+**~/parameter-data/crop-n-and-lignin-fractions.csv**. A file containing parameters relating to the nitrogen and lignin content of different crop residue types.
 
-#### ~/parameter-data/manure-coefficients.csv
-A file containing parameters relating to the composition of different types of livestock manure.
+**~/parameter-data/manure-coefficients.csv**. A file containing parameters relating to the composition of different types of livestock manure.
 
-#### ~/parameter-data/model-parameters.csv
-A file containing the main model parameters controlling carbon/organic matter flows into, out of and between the model C pools.
+**~/parameter-data/model-parameters.csv**. A file containing the main model parameters controlling carbon/organic matter flows into, out of and between the model C pools.
 
 
-### ~/read-me-im-your-tutorial-handout.html
+#### ~/read-me-im-your-tutorial-handout.html
 This project handout file.
 
-### ~/msc-morocco-soil-c-modelling.Rproj
+#### ~/msc-morocco-soil-c-modelling.Rproj
 The RStudio projects file which stores information about the whole directory. Double-click this file to open the associated project (i.e. the model and everything which accompanies it) in RStudio.
 
-### ~/app.R
-The RShiny app which provides an interactive user interface for the model.
+#### ~/app.R
+The RShiny app which provides an interactive user interface for the model. This R script contains all the coding to build the app user interface (the parts you see and interact with as a user) and the server (the part that does the actual computations). If you want to look at this to figure out how a simple Shiny app is built, feel free to dive in --- but you won't need to modify it to complete your tasks.
 
-### ~/ipcc-c-model-functions.R
+#### ~/ipcc-c-model-functions.R
 The functions which together create the model. The file **app.R** sources this file ('source' meaning to run all the code a script contains) in order to build all the functions it requires to make the model work.
 
-### ~/ipcc-c-model-setup.R
+#### ~/ipcc-c-model-setup.R
 You can think of this script as an alternative to **app.R**. It does the same thing (i.e. builds and runs the model), but it does it via a plain R script rather than as a Shiny app. It is currently written to build the example scenario (saved in **model-scenarios/scenario-baseline.rds**) which **app.R** uses as its initial default, but this script can be modified and re-run (by those of you keen to roll up your sleeves and do some coding) to create different model scenarios.
