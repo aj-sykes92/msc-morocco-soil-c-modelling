@@ -6,7 +6,7 @@ Dr Alasdair Sykes
 <br> <br> <br>
 <img src="not-for-students/hatim-belyamani-1GZWbLJWfRo-unsplash.jpg" width="60%" style="display: block; margin: auto;" />
 <br>
-<img src="read-me-im-your-project-introduction_files/figure-gfm/main_plot-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-gfm/main_plot-1.png" style="display: block; margin: auto;" />
 <br> <br>
 
 ## 1\. Introduction
